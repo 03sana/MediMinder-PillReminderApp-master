@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "186195701379",
+    "firebase_url": "https://midi-minder-default-rtdb.firebaseio.com",
+    "project_id": "midi-minder",
+    "storage_bucket": "midi-minder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186195701379:android:14b92660cbf7ca2ac7f5b6",
+        "android_client_info": {
+          "package_name": "com.appmid.midminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186195701379-07o5l6pvt15sf6anglmercr0bski9qtt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appmid.midminder",
+            "certificate_hash": "8687c526a3524709297c15b8b538c519ab59c1c6"
+          }
+        },
+        {
+          "client_id": "186195701379-qj559a3k8c31nok89chfoodolfmarrbl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzBG3OJXMYIHwGLyuVbp1kxfD3Hrn6GAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "186195701379-644443qti1kdt624np9f8vl864qi20sv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "186195701379-25mj96mdaki1betv1c1bp78s2qfs462e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.appmid.midminder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

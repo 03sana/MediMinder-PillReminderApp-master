@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>186195701379-25mj96mdaki1betv1c1bp78s2qfs462e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.186195701379-25mj96mdaki1betv1c1bp78s2qfs462e</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>186195701379-07o5l6pvt15sf6anglmercr0bski9qtt.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAQIPCuVKtJlEI4vjd3SiABdw3vvaAow7U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>186195701379</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.appmid.midminder</string>
+	<key>PROJECT_ID</key>
+	<string>midi-minder</string>
+	<key>STORAGE_BUCKET</key>
+	<string>midi-minder.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:186195701379:ios:d97f203536b26342c7f5b6</string>
+	<key>DATABASE_URL</key>
+	<string>https://midi-minder-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
