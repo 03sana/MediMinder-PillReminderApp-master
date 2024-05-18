@@ -1,3 +1,8 @@
+![Green Gradient Application Showcase Presentation](https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/e05cd83e-c483-4a53-ba70-744e0f13c807)
+
+## Figma Design File
+https://www.figma.com/community/file/1373636997429151322/mediminder-pillreminderapp
+
 # MediMinder App
 
 MediMinder is a React Native application designed to help users manage their medication schedules. It features user authentication, profile management, and medication tracking functionalities. The backend is built using Firebase, and the frontend is developed using React Native, Expo, and Redux for state management.
@@ -97,4 +102,6 @@ For Android:npx expo run:android
 
 <p>   <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/03280010-9be3-4f36-8efc-36e2596db61f"/> 
 <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/b8776bcf-120f-439f-a4cb-9b54aa7f0612"/> </p>
+
+
 
