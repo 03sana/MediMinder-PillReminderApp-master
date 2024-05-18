@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   pillImage: {
-    width: 100,
+    width: 150,
     height: 100,
     marginVertical: 20,
   },
