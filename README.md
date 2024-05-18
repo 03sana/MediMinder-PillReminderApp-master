@@ -8,41 +8,64 @@ https://www.figma.com/community/file/1373636997429151322/mediminder-pillreminder
 MediMinder is a React Native application designed to help users manage their medication schedules. It features user authentication, profile management, and medication tracking functionalities. The backend is built using Firebase, and the frontend is developed using React Native, Expo, and Redux for state management.
 
 ## Features
-- **User Authentication:** Sign in, sign up, and password reset functionalities using Firebase Authentication.
-- **Google Sign-In:** Integrated Google Sign-In for easy authentication.
-- **Medication Tracking:** Add and track medication schedules, including reminders.
-- **Date and Time Pickers:** Select date and time for medication reminders.
-- **Bottom Tab Navigation:** Navigate between different screens using a bottom tab navigator.
-- **State Management:** Utilized Redux for managing global state across the application.
-- **Profile Management:** View and update user profile information.
 
-## Challenges Faced
+- **User Authentication**
+  - Sign-in, Sign-up and sign-out
+  - Email and Google authentication
+  - Password reset via email
 
-### 1. User Authentication
-- Implementing Firebase Authentication for email and password login was straightforward.
-- Google Sign-In integration faced several issues, which were resolved by referring to [this YouTube video](https://youtu.be/3pYxbkhpOBY?si=2uTkKtisRoVQm8dz).
+- **Profile Management**
+  - View and update user profile information
 
-### 2. Profile Management
-- Updating the user's email required email verification, leading to errors such as "Firebase: Please verify the new email before changing email."
-- The username update under the profile picture was initially challenging but resolved through state management.
+- **Medication Management**
+  - Add medication details to Firestore database
+  - Display and update medication information on the screen
+  - Track medication intake
 
-### 3. Medication Tracking
-- Saving medication data to Firestore and displaying it correctly involved handling asynchronous operations.
-- Implementing date and time pickers and ensuring they worked seamlessly with the user interface required precise state management.
+- **User Interface**
+  - Clean and intuitive UI design
+  - Integration with various custom components such as inputs, buttons, and date pickers
 
-### 4. Notifications
-- Adding push notifications for medication reminders faced compatibility issues with Expo and Firebase, and deprecated packages posed additional challenges.
+## Challenges and Solutions
 
-### 5. Navigation
-- The bottom tab navigator was necessary for screen navigation, despite the initial desire to avoid it.
-- Navigating between screens without the bottom tab navigator led to issues that were resolved by including it.
+### Notifications
+- **Issue:** Unable to fully implement notifications.
+- **Reason:** Complications arose when adding notifications at the end of the project. Notifications require a real Android device for testing, which I did not have access to.
+- **Solution:** I decided to remove the incomplete notification code to maintain project consistency.
 
-### 6. Gradle Issues
-- Faced several Gradle-related issues during the build process, which required adjustments in the configuration files.
+### Password Reset
+- **Issue:** Implementing password reset using a code requires a different database than Firebase.
+- **Solution:** Implemented password reset functionality via email instead.
 
-### 7. State Management
-- Redux was used to manage the global state of the application. This included handling user authentication states, profile updates, and medication data management.
-- Ensuring the Redux store was properly updated and persisted across sessions was critical for a seamless user experience.
+### Google Sign-In
+- **Issue:** Encountered multiple problems with Google Sign-In.
+- **Solution:** Referred to the YouTube video [here](https://youtu.be/3pYxbkhpOBY) and various Stack Overflow posts to resolve issues.
+
+### Date and Time Picker
+- **Issue:** Had difficulty importing and displaying date and time pickers.
+- **Solution:** Managed to import and use the date picker, although there were issues integrating it with the medicine screen.
+
+### Bottom Tab Navigator
+- **Issue:** Did not initially want to use the bottom tab navigator, but navigation issues required its implementation.
+- **Solution:** Used the bottom tab navigator to ensure smooth navigation between screens.
+
+### Gradle Issues
+- **Issue:** Faced multiple issues related to Gradle configuration.
+- **Solution:** Resolved by consulting various online resources and documentation.
+
+
+## Technologies Used
+
+- **React Native**
+- **Expo**
+- **Firebase Authentication**
+- **Firebase Firestore**
+- **Redux for state management**
+---Redux was used to manage the global state of the application. This included handling user authentication
+states, profile updates, and medication data management.
+--- Ensuring the Redux store was properly updated and persisted across sessions was critical for a seamless user
+experience.
+
 
 ## Installation
 
@@ -62,18 +85,6 @@ MediMinder is a React Native application designed to help users manage their med
 2. Run the app on your desired platform:
 For iOS:npx expo run:ios
 For Android:npx expo run:android
-
-### Known Issues
-1. Email Update: Users cannot update their email without verifying the new email first due to Firebase's restrictions.
-2. Notifications: Push notifications for medication reminders are not fully implemented due to compatibility issues with Expo and Firebase.
-3. Date and Time Pickers: Issues were faced when importing and displaying date and time pickers on the medication screen.
-4. Google Sign-In: Integration faced several issues but was resolved with external resources.
-5 .Navigation: Screen navigation required the use of a bottom tab navigator to function correctly.
-6. Gradle: Various Gradle-related issues occurred during the build process.
-7 .Resources
-8 .Referred to Stack Overflow for various coding issues and solutions.
-9 .Utilized Firebase Documentation for implementing authentication and Firestore features.
-10 .Consulted Expo Documentation for handling project configurations and dependencies.
 
 
 ## Screenshots
