@@ -8,7 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 import { logout, updateProfile } from "../../store/auth/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
-
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { setUser } from "../../store/user/reducers";
 const ProfileScreen = () => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const ProfileScreen = () => {
 
   const onLogoutPressed = async () => {
     const isLoggedOut = await logout(dispatch);
+    await GoogleSignin.signOut();
     if (isLoggedOut) {
       navigation.navigate("Welcome");
     }

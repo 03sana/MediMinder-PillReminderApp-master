@@ -14,15 +14,6 @@ const GoogleSignInButton = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        "97566136614-375vdr4jg0cco8a4llqh1f3ill7cckfg.apps.googleusercontent.com",
-      scopes: [],
-      offlineAccess: true,
-    });
-  }, []);
-
   const onGoogleButtonPress = async () => {
     try {
       await GoogleSignin.hasPlayServices();
