@@ -93,4 +93,8 @@ For Android:npx expo run:android
 </p>
 
 
+##Firebase 
+
+<p>   <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/03280010-9be3-4f36-8efc-36e2596db61f"/> 
+<img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/b8776bcf-120f-439f-a4cb-9b54aa7f0612"/> </p>
 
