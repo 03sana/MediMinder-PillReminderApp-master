@@ -4,20 +4,18 @@
     "slug": "MediMinder",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/reminderImg.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.appmid.midminder"
+      "bundleIdentifier": "com.sana03.MediMinder"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.appmid.midminder"
+      "package": "com.sana03.MediMinder"
     },
     "web": {
       "favicon": "./assets/images/reminderImg.png"
@@ -35,16 +33,23 @@
       "@react-native-google-signin/google-signin",
       [
         "expo-build-properties",
+
         {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0",
+            "ndkVersion": "26.1.10909125"
+          },
           "ios": {
-            "useFramwork": "static"
+            "deploymentTarget": "13.4"
           }
         }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": "ae16ffae-ae2c-4870-8b99-d0ededac590d"
+        "projectId": "5a02912c-727b-45e2-aec6-5c04da447f1f"
       }
     }
   }

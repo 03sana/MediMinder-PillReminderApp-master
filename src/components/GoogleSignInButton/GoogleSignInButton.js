@@ -1,32 +1,43 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-// import {
-//   GoogleSignin,
-// } from "@react-native-google-signin/google-signin";
-import CustomButton from "../CustomButton";
+import { Button } from "react-native";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import auth from "@react-native-firebase/auth";
 
 const GoogleSignInButton = () => {
-  const onSignInGoogle = async () => {
-    // try {
-    //   await GoogleSignin.hasPlayServices();
-    //   const user = await GoogleSignin.signIn();
-    //   console.error(user);
-    // } catch (e) {
-    //   console.error(e);
-    // }
+  //Configure Google Signin
+
+  const onGoogleButtonPress = async () => {
+    try {
+      await GoogleSignin.configure({
+        webClientId:
+          "97566136614-375vdr4jg0cco8a4llqh1f3ill7cckfg.apps.googleusercontent.com",
+        offlineAccess: false,
+      });
+
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+
+      const { idToken } = await GoogleSignin.signIn();
+      console.log("Google Play Services available", idToken);
+
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const userSignIn = await auth().signInWithCredential(googleCredential);
+      console.log("User signed in: ", userSignIn);
+    } catch (error) {
+      console.error("Error signing in with Google: ", error);
+    }
   };
+
+  // Button UI
   return (
-    <>
-      <CustomButton
-        text={"Continue with Google"}
-        onPress={onSignInGoogle}
-        bgColor="#FAE9EA"
-        fgColor="#DD4D44"
-      />
-    </>
+    <Button
+      title="Sign-In with Google"
+      onPress={() =>
+        onGoogleButtonPress().then(() => console.log("Signed in with Google!"))
+      }
+    />
   );
 };
 
 export default GoogleSignInButton;
-
-const styles = StyleSheet.create({});

@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+// Import screens
 import SigninScreen from "../screens/SigninScreen";
 import SignupScreen from "../screens/SignupScreen";
 import ConfirmEmailScreen from "../screens/ConfirmEmailScreen";
@@ -16,6 +17,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import CalenderScreen from "../screens/CalenderScreen";
 import IntakeScreen from "../screens/IntakeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import MedicineDetail from "../screens/MedicineDetail"; // Import the MedicineDetail screen
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,22 +34,19 @@ function MainTabs() {
           } else if (route.name === "ProfileScreen") {
             iconName = focused ? "person" : "person-outline";
           } else if (route.name === "IntakeScreen") {
-            iconName = focused ? "medical" : "medical-outline"; // Assuming "medical" icons exist
+            iconName = focused ? "medical" : "medical-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "gray",
       })}
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-      }}
     >
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{ title: "Home" }}
       />
-
       <Tab.Screen
         name="IntakeScreen"
         component={IntakeScreen}
@@ -86,6 +85,11 @@ const Navigation = () => {
           name="MainTabs"
           component={MainTabs}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MedicineDetail" // Make sure this name matches the one used in the navigation call
+          component={MedicineDetail}
+          options={{ title: "Medicine Details" }} // Optional: customize the header title
         />
       </Stack.Navigator>
     </NavigationContainer>

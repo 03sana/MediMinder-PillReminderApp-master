@@ -7,9 +7,9 @@ import {
   ScrollView,
   ScrollViewComponent,
 } from "react-native";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 import Logo from "../../../assets/images/mediminder_logo.png";
 
 import CustomInput from "../../components/CustomInput";
@@ -26,32 +26,30 @@ const SigninScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { height } = useWindowDimensions();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const showLoginErrorMessage = () => {
     Toast.show({
-      type: 'error',
-      text1: 'Failed to login',
-      text2: 'Something went wrong. Please try again.'
+      type: "error",
+      text1: "Failed to login",
+      text2: "Something went wrong. Please try again.",
     });
-  }
+  };
   const onSignInPressed = async () => {
     console.warn("sign in");
-    try{
-      setIsLoading(true)
-      const user=await login(dispatch,{email:username, password});
-     if(user) navigation.navigate("MainTabs", { screen: "HomeScreen" });
-     else showLoginErrorMessage();
-    }catch(e){
+    try {
+      setIsLoading(true);
+      const user = await login(dispatch, { email: username, password });
+      if (user) navigation.navigate("MainTabs", { screen: "HomeScreen" });
+      else showLoginErrorMessage();
+    } catch (e) {
       showLoginErrorMessage();
       console.error(e);
-    }
-    finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
     //validate user
-    
   };
   const onForgotPasswordPressed = () => {
     navigation.navigate("ForgotPassword");
@@ -101,7 +99,6 @@ const SigninScreen = () => {
           onPress={onSignUpPressed}
           type="TERTIARY2"
           filled={false}
-         
         />
       </View>
     </ScrollView>

@@ -19,7 +19,7 @@ const HomeScreen = () => {
   // Function to handle pressing the Add Medicine button
   const onAddMedPress = () => {
     console.log("Navigating to Add Medicine");
-    navigation.navigate("MainTabs", { screen: "IntakeScreen" });
+    navigation.navigate("MainTabs", { screen: "CalenderScreen" });
   };
 
   return (

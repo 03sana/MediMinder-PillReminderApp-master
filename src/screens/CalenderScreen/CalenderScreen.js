@@ -14,46 +14,39 @@ import { useNavigation } from "@react-navigation/native";
 
 const CalenderScreen = () => {
   const navigation = useNavigation();
+  const [medicineName, setMedicineName] = useState("");
+  const [medicineType, setMedicineType] = useState("");
+  const [dose, setDose] = useState("");
+  const [amount, setAmount] = useState("");
 
   const onSavePress = () => {
-    navigation.navigate("IntakeScreen");
+    // Pass new medicine details back to the IntakeScreen
+    navigation.navigate("IntakeScreen", {
+      newMedicine: { name: medicineName, type: medicineType, dose, amount },
+    });
   };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <Text style={styles.title}>Add Medicine</Text>
-        <Text style={styles.description}>
-          Fill out the fields and hit the Save Button to add it!
-        </Text>
-
-        <Text style={styles.inputText}>Name*</Text>
         <CustomInput
-          placeholder="Name (e.g. Ibuprofen)"
-          // value={}
-          // setValue={}
+          placeholder="Name (e.g., Ibuprofen)"
+          value={medicineName}
+          setValue={setMedicineName}
         />
-
-        <Text style={styles.inputText}>Type*</Text>
-        <DropDownMenu />
-
-        <Text style={styles.inputText}>Dose*</Text>
+        <DropDownMenu value={medicineType} setValue={setMedicineType} />
         <CustomInput
-          placeholder="Dose (e.g. 100mg)"
-          // value={}
-          // setValue={}
+          placeholder="Dose (e.g., 100mg)"
+          value={dose}
+          setValue={setDose}
         />
-
-        <Text style={styles.inputText}>Amount*</Text>
         <CustomInput
-          placeholder="Dose (e.g. 3)"
-          //value={}
-          // setValue={}
+          placeholder="Amount (e.g., 3)"
+          value={amount}
+          setValue={setAmount}
         />
-        <Text style={styles.inputText}>Reminders</Text>
-      </View>
-
-      <View style={styles.buttonContainer}>
-        <CustomButton text={"Save"} onPress={onSavePress} type="TERTIARY4" />
+        <CustomButton text="Save" onPress={onSavePress} type="TERTIARY4" />
       </View>
     </ScrollView>
   );

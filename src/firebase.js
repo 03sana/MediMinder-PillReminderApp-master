@@ -1,16 +1,14 @@
-import {initializeApp} from "firebase/app";
-import { getAuth } from '@firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "@firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyBSBS6Y1vnKlq5uM2RP9dAR3uCsAl7x220",
-  authDomain: "midi-minder.firebaseapp.com",
-  databaseURL: "https://midi-minder-default-rtdb.firebaseio.com",
-  projectId: "midi-minder",
-  storageBucket: "midi-minder.appspot.com",
-  messagingSenderId: "186195701379",
-  appId: "1:186195701379:web:7e1723ecbc88b0bfc7f5b6",
-  measurementId: "G-HLZ0VJ2KDH"
+  apiKey: "AIzaSyA_ZvBdoBzUe1_7CuY4b7FQ4GbMfpH1GB0",
+  authDomain: "mediminder-a3d22.firebaseapp.com",
+  databaseURL: "https://mediminder-a3d22-default-rtdb.firebaseio.com",
+  projectId: "mediminder-a3d22",
+  storageBucket: "mediminder-a3d22.appspot.com",
+  messagingSenderId: "97566136614",
+  appId: "1:97566136614:web:44d38debaf1890dd5cc9e7",
 };
-
 const app = initializeApp(firebaseConfig);
-export const auth=getAuth(app)
+export const auth = getAuth(app);
 export default app;
