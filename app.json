@@ -15,7 +15,8 @@
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.sana03.MediMinder"
+      "bundleIdentifier": "com.sana03.MediMinder",
+      "permissions": ["NOTIFICATIONS"]
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +24,8 @@
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.sana03.MediMinder"
+      "package": "com.sana03.MediMinder",
+      "permissions": ["RECEIVE_BOOT_COMPLETED", "VIBRATE"]
     },
     "web": {
       "favicon": "./assets/images/reminderImg.png"

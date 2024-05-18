@@ -1,7 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-const IntakeTracker = ({ taken = 0, total = 2, day = "Tuesday" }) => {
+const IntakeTracker = ({ taken = 0, total = 2 }) => {
+  // Function to get the current day of the week as a string
+  const getCurrentDay = () => {
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const today = new Date().getDay();
+    return daysOfWeek[today];
+  };
+
+  const day = getCurrentDay();
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Intakes</Text>
@@ -31,12 +48,12 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: "#E0F7FA", // Adjust the color to match your screenshot
+    backgroundColor: "#E0F7FA",
     alignItems: "center",
     justifyContent: "center",
   },
   pillImage: {
-    width: 40,
+    width: 50,
     height: 40,
     marginBottom: 10,
   },

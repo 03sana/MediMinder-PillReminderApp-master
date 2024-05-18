@@ -1,30 +1,32 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
+
 import Navigation from "./src/navigation";
 import { initUserAuthStateListner } from "./src/store/user/actions";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { setIsCheckingAuth } from "./src/store/auth/reducers";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 
 export default function App() {
-  const auth = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const setIsAuthLoaded = () =>{
-      if(auth.isCheckingAuth)dispatch(setIsCheckingAuth(false));
-      console.log('here')
-    }
-    const unsubscribe = initUserAuthStateListner(dispatch,setIsAuthLoaded);
+    const setIsAuthLoaded = () => {
+      if (auth.isCheckingAuth) dispatch(setIsCheckingAuth(false));
+      console.log("here");
+    };
+    const unsubscribe = initUserAuthStateListner(dispatch, setIsAuthLoaded);
     return () => unsubscribe();
   }, []);
+
   return (
-      <View style={styles.container}>
-        <Navigation />
-        <StatusBar style="auto" />
-        <Toast />
-      </View>
+    <View style={styles.container}>
+      <Navigation />
+      <StatusBar style="auto" />
+      <Toast />
+    </View>
   );
 }
 

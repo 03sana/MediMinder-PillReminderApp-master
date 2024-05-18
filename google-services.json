@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "97566136614-btg96h724rukhiip0nq6qfhlpkatklr6.apps.googleusercontent.com",
+          "client_id": "97566136614-32biaecpm5mpgetns641vh7o4j9o7587.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.sana03.MediMinder",
-            "certificate_hash": "2a112f8590cad96c9f23210919706c01ba75fba4"
+            "certificate_hash": "3a93ba70317c22d124856fe8060f57a09b089823"
           }
         },
         {

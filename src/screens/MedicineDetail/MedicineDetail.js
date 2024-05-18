@@ -1,9 +1,73 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"; // Ensure these icons are installed
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from "react-native";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const MedicineDetail = ({ route, navigation }) => {
   const { medicine } = route.params;
+  const dateTime = medicine.dateTime
+    ? new Date(medicine.dateTime).toLocaleString()
+    : "Not set";
+  console.log("Received in MedicineDetail:", medicine, dateTime);
+
+  // Receives medicine and dateTime from IntakeScreen
+  console.log("Received in MedicineDetail:", medicine);
+
+  const navigateToEdit = () => {
+    // Navigates to the Edit screen (to be implemented)
+    console.log("Navigate to Edit screen");
+  };
+
+  console.log("Received in MedicineDetail:", medicine);
+  const handleDeleteMedicine = async () => {
+    Alert.alert(
+      "Deleting Medicine",
+      "Are you sure you want to delete this medicine?",
+      [
+        { text: "No", style: "cancel" },
+        {
+          text: "Yes",
+          onPress: async () => {
+            if (medicine && medicine.id) {
+              try {
+                await deleteDoc(doc(db, "medicines", medicine.id));
+                Alert.alert("Success", "Medicine deleted successfully.");
+                navigation.goBack();
+              } catch (error) {
+                console.error("Error deleting document:", error);
+                Alert.alert("Error", "Failed to delete medicine");
+              }
+            } else {
+              Alert.alert("Error", "No medicine ID found");
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleTakeMedicine = async () => {
+    if (medicine && medicine.id) {
+      try {
+        await updateDoc(doc(db, "medicines", medicine.id), { taken: true });
+        Alert.alert("Success", "You have taken your medicine.");
+        navigation.goBack();
+      } catch (error) {
+        console.error("Error updating document:", error);
+        Alert.alert("Error", "Failed to mark as taken");
+      }
+    } else {
+      Alert.alert("Error", "No medicine ID found");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -11,7 +75,7 @@ const MedicineDetail = ({ route, navigation }) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="information-circle-outline" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log("Delete medicine")}>
+        <TouchableOpacity onPress={handleDeleteMedicine}>
           <MaterialCommunityIcons
             name="trash-can-outline"
             size={24}
@@ -25,22 +89,17 @@ const MedicineDetail = ({ route, navigation }) => {
         style={styles.pillImage}
       />
       <Text style={styles.medicineName}>{medicine.name}</Text>
-      <Text
-        style={styles.scheduled}
-      >{`Scheduled for ${medicine.time}, ${medicine.day}`}</Text>
+      <Text style={styles.scheduled}>Scheduled for {dateTime}</Text>
       <Text
         style={styles.dosage}
       >{`${medicine.amount}, ${medicine.dose}`}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => console.log("Take action")}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleTakeMedicine}>
           <Text style={styles.buttonText}>Take</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => console.log("Edit action")}
+          onPress={navigateToEdit} // Call navigateToEdit function on Edit button press
         >
           <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>

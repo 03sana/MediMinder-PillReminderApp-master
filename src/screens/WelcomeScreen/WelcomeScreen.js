@@ -6,23 +6,22 @@ import {
   useWindowDimensions,
   ScrollView,
   ActivityIndicator,
-  
 } from "react-native";
-import React, { Fragment, useEffect, } from "react";
+import React, { Fragment, useEffect } from "react";
 import Logo from "../../../assets/images/mediminder_logo.png";
 
 import CustomButton from "../../components/CustomButton";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 const WelcomeScreen = () => {
   const { height } = useWindowDimensions();
-  const auth = useSelector((state) => state.auth)
-  const user = useSelector((state) => state.user)
+  const auth = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if(user.user) navigation.navigate("MainTabs");
-  },[auth.isCheckingAuth]);
+    if (user.user) navigation.navigate("MainTabs");
+  }, [auth.isCheckingAuth]);
 
   const navigation = useNavigation();
   const onSignInPressed = () => {
@@ -46,23 +45,25 @@ const WelcomeScreen = () => {
         <Text style={styles.description}>
           Your personal assistant for managing your medication schedule.
         </Text>
-        {auth.isCheckingAuth ?  <ActivityIndicator size="large"/>: !user.user && (
-          <Fragment> 
+        {auth.isCheckingAuth ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          !user.user && (
+            <Fragment>
               <CustomButton
-          text={"Sign In"}
-          onPress={onSignInPressed}
-          type="PRIMARY"
-        />
-        <CustomButton
-          text={"Sign Up"}
-          onPress={onSignUpPressed}
-          type="SECONDARY"
-          filled={false}
-        />
-        </Fragment>)
-        }
-       
-      
+                text={"Sign In"}
+                onPress={onSignInPressed}
+                type="PRIMARY"
+              />
+              <CustomButton
+                text={"Sign Up"}
+                onPress={onSignUpPressed}
+                type="SECONDARY"
+                filled={false}
+              />
+            </Fragment>
+          )
+        )}
       </View>
     </ScrollView>
   );
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     color: "#FF7551",
   },
   app: {
-    fontSize: 60,
+    fontSize: 55,
     fontWeight: "bold",
     color: "#196EB0",
   },

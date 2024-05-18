@@ -4,8 +4,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { Ionicons } from "@expo/vector-icons";
 // Import screens
 import SigninScreen from "../screens/SigninScreen";
 import SignupScreen from "../screens/SignupScreen";
@@ -17,7 +17,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import CalenderScreen from "../screens/CalenderScreen";
 import IntakeScreen from "../screens/IntakeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import MedicineDetail from "../screens/MedicineDetail"; // Import the MedicineDetail screen
+import MedicineDetail from "../screens/MedicineDetail";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,7 +34,9 @@ function MainTabs() {
           } else if (route.name === "ProfileScreen") {
             iconName = focused ? "person" : "person-outline";
           } else if (route.name === "IntakeScreen") {
-            iconName = focused ? "medical" : "medical-outline";
+            iconName = focused ? "calendar" : "calendar-outline";
+          } else if (route.name === "CalenderScreen") {
+            iconName = focused ? "flask" : "flask-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -54,8 +56,8 @@ function MainTabs() {
       />
       <Tab.Screen
         name="CalenderScreen"
-        component={CalenderScreen}
-        options={{ title: "Calendar" }}
+        component={CalenderScreen} //i mistakingly named it calendar as this screen will have the user to input his medicine detailes
+        options={{ title: "Add Medicine" }}
       />
       <Tab.Screen
         name="ProfileScreen"
@@ -87,9 +89,9 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="MedicineDetail" // Make sure this name matches the one used in the navigation call
+          name="MedicineDetail"
           component={MedicineDetail}
-          options={{ title: "Medicine Details" }} // Optional: customize the header title
+          options={{ title: "Medicine Details" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

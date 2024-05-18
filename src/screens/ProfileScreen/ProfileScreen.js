@@ -1,85 +1,100 @@
-import {
-  StyleSheet,
-  Text,
-  Image,
-  View,
-  ScrollView,
-  ScrollViewComponent,
-} from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, Image, View, ScrollView, Alert } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-
 import Profile from "../../../assets/images/Avatar.png";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { logout } from "../../store/auth/actions";
-import { setUser } from "../../store/user/reducers";
-const ProfileScreen = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState();
+import { logout, updateProfile } from "../../store/auth/actions";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
 
-  const dispatch = useDispatch()
+const ProfileScreen = () => {
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const onSavePressed = () => {
-    navigation.navigate("ConfirmEmail");
+  const [username, setUsername] = useState(user?.displayName || "");
+  const [email, setEmail] = useState(user?.email || "");
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.displayName || "");
+      setEmail(user.email || "");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (
+        user &&
+        !user.emailVerified &&
+        user.providerData
+          .map((provider) => provider.providerId)
+          .includes("password")
+      ) {
+        alert("Please verify your email.");
+      }
+      dispatch(
+        setUser(
+          user
+            ? {
+                email: user.email,
+                uid: user.uid,
+                displayName: user.displayName,
+              }
+            : null
+        )
+      );
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
+  const onSavePressed = async () => {
+    try {
+      const payload = { uid: user.uid, username, email };
+      await updateProfile(dispatch, payload);
+      Alert.alert(
+        "Success",
+        "Please verify your new email (if changed) to complete the update."
+      );
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+      Alert.alert("Error", error.message);
+    }
   };
 
-  const onSigninPressed = () => {
-    navigation.navigate("SignIn");
+  const onLogoutPressed = async () => {
+    const isLoggedOut = await logout(dispatch);
+    if (isLoggedOut) {
+      navigation.navigate("Welcome");
+    }
   };
-
-  const onLogoutPressed = async () =>{
-   const isLogedOut= await logout(dispatch)
-   if(isLogedOut){
-    navigation.navigate("Welcome");
-    dispatch(setUser(null));
-   }
-  
-  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <Image
           source={Profile}
-          //style={(styles.Profile, { height: height * 0.3 })}
+          style={styles.profileImage}
           resizeMode="contain"
         />
+        <Text style={styles.displayName}>{username}</Text>
 
+        <Text style={styles.label}>Username</Text>
         <CustomInput
           placeholder="Username"
           value={username}
           setValue={setUsername}
         />
 
+        <Text style={styles.label}>Email</Text>
         <CustomInput placeholder="Email" value={email} setValue={setEmail} />
 
-        <CustomInput
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry
-        />
-        <CustomInput
-          placeholder="Gender"
-          value={username}
-          setValue={setUsername}
-        />
-
-        <CustomInput
-          placeholder="Date of Birth"
-          value={username}
-          setValue={setUsername}
-        />
-
-        <CustomButton text={"Save"} onPress={onSavePressed} />
-
+        <CustomButton text={"Save Changes"} onPress={onSavePressed} />
         <CustomButton
-          text={"logout"}
+          text={"Logout"}
           onPress={onLogoutPressed}
           type="TERTIARY2"
         />
@@ -88,27 +103,29 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
-
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: "center",
-    padding: 50,
-    marginTop: 50,
+    padding: 20,
   },
-
-  title: {
+  profileImage: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+  },
+  displayName: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#196EB0",
-    margin: 10,
+    marginBottom: 10,
   },
-
-  text: {
-    color: "gray",
-    marginVertical: 10,
-  },
-  link: {
+  label: {
+    alignSelf: "flex-start",
+    marginLeft: 10,
     color: "#196EB0",
+    fontWeight: "bold",
   },
 });
+
+export default ProfileScreen;

@@ -1,20 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const daysOfWeek = ["RI", "SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"]; // Adjust days as needed
-
+// Array representing the days of the week starting from Sunday
+const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const CalendarComponent = () => {
-  const today = new Date();
-  const startOfWeek = today.getDate() - today.getDay(); // Calculate the start of the week based on today
+  const today = new Date(); // Get the current date
+
+  const startOfWeek = today.getDate() - today.getDay(); // Calculate the start of the week based on today's date and day of the week
 
   const weekDays = daysOfWeek.map((day, index) => {
+    // Create a new date object for each day of the current week
     const date = new Date(
       today.getFullYear(),
       today.getMonth(),
       startOfWeek + index
     );
-    const dayOfMonth = date.getDate();
-    const isToday = date.toDateString() === today.toDateString();
+    const dayOfMonth = date.getDate(); // Get the day of the month
+    const isToday = date.toDateString() === today.toDateString(); // Check if the date is today
 
     return (
       <TouchableOpacity
@@ -33,30 +35,30 @@ const CalendarComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-around", // Ensures items are spaced evenly
+    justifyContent: "space-around",
     paddingVertical: 10,
-    backgroundColor: "#fff", // Set background color to white
+    backgroundColor: "#fff",
   },
   dayContainer: {
     alignItems: "center",
     justifyContent: "center",
-    width: 32, // Adjust width to fit your layout
-    height: 42, // Adjust height as needed
+    width: 32,
+    height: 42,
   },
   today: {
-    borderRadius: 10, // Half of width and height to create a perfect circle
+    borderRadius: 10,
 
-    borderColor: "#196EB0", // Border color for the current day
+    borderColor: "#196EB0",
     borderWidth: 2,
   },
   dayOfWeek: {
-    fontSize: 10, // Adjust font size as needed
-    color: "black", // Text color for day of week
+    fontSize: 10,
+    color: "black",
   },
   dayOfMonth: {
-    fontSize: 10, // Adjust font size as needed
-    color: "black", // Text color for day of month
-    fontWeight: "bold", // Bold text for the day of the month
+    fontSize: 10,
+    color: "black",
+    fontWeight: "bold",
   },
 });
 

@@ -1,87 +1,135 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
-  ScrollView,
-  ScrollViewComponent,
+  Button,
+  SafeAreaView,
+  TouchableOpacity,
+  Platform,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
-import CustomButton from "../../components/CustomButton";
-import DropDownMenu from "../../components/DropDownMenu";
 
 import { useNavigation } from "@react-navigation/native";
+import DropDownMenu from "../../components/DropDownMenu/DropDownMenu";
+import CustomButton from "../../components/CustomButton";
+import DatePicker from "../../components/DatePicker";
 
-const CalenderScreen = () => {
+import { collection, addDoc } from "firebase/firestore";
+import { db, auth } from "../../firebase";
+
+const CalendarScreen = () => {
   const navigation = useNavigation();
   const [medicineName, setMedicineName] = useState("");
   const [medicineType, setMedicineType] = useState("");
   const [dose, setDose] = useState("");
   const [amount, setAmount] = useState("");
+  const [dateTime, setDateTime] = useState(new Date());
+  false;
+  const onSavePress = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "medicines"), {
+        userId: auth.currentUser.uid,
+        name: medicineName,
+        type: medicineType,
+        dose,
+        amount,
+        dateTime: dateTime.toISOString(),
+        taken: false,
+      });
+      console.log("Document written with ID: ", docRef.id);
 
-  const onSavePress = () => {
-    // Pass new medicine details back to the IntakeScreen
-    navigation.navigate("IntakeScreen", {
-      newMedicine: { name: medicineName, type: medicineType, dose, amount },
-    });
+      // Navigate to IntakeScreen with new medicine data
+      navigation.navigate("IntakeScreen", {
+        newMedicine: {
+          id: docRef.id,
+          name: medicineName,
+          type: medicineType,
+          dose,
+          amount,
+          dateTime: dateTime.toISOString(),
+          taken: false,
+        },
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      Alert.alert("Error", "Failed to add medicine");
+    }
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Add Medicine</Text>
-        <CustomInput
-          placeholder="Name (e.g., Ibuprofen)"
-          value={medicineName}
-          setValue={setMedicineName}
-        />
-        <DropDownMenu value={medicineType} setValue={setMedicineType} />
-        <CustomInput
-          placeholder="Dose (e.g., 100mg)"
-          value={dose}
-          setValue={setDose}
-        />
-        <CustomInput
-          placeholder="Amount (e.g., 3)"
-          value={amount}
-          setValue={setAmount}
-        />
-        <CustomButton text="Save" onPress={onSavePress} type="TERTIARY4" />
-      </View>
-    </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Add Medicine</Text>
+
+      <Text style={styles.inputTitle}>Name*</Text>
+      <CustomInput
+        placeholder="Name (e.g., Ibuprofen)"
+        value={medicineName}
+        setValue={setMedicineName}
+        onChangeText={setMedicineName}
+      />
+
+      <Text style={styles.inputTitle}>Type*</Text>
+      <DropDownMenu
+        value={medicineType}
+        setValue={setMedicineType}
+        onChangeText={setMedicineType}
+      />
+
+      <Text style={styles.inputTitle}>Dose*</Text>
+      <CustomInput
+        placeholder="Dose (e.g., 100mg)"
+        value={dose}
+        setValue={setDose}
+        onChangeText={setDose}
+      />
+
+      <Text style={styles.inputTitle}>Amount*</Text>
+      <CustomInput
+        placeholder="Amount (e.g., 3)"
+        value={amount}
+        setValue={setAmount}
+        onChangeText={setAmount}
+      />
+      <Text style={styles.inputTitle}>Reminders</Text>
+      <DatePicker dateTime={dateTime} setDateTime={setDateTime} />
+      <CustomButton
+        text="Save Medicine"
+        onPress={onSavePress}
+        type="PRIMARY" // This corresponds to a style defined in CustomButton
+      />
+    </SafeAreaView>
   );
 };
 
-export default CalenderScreen;
+export default CalendarScreen;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 50,
+    flex: 1,
+    padding: 20,
     marginTop: 50,
   },
-  buttonContainer: {
-    alignItems: "center",
-    marginTop: 20, // Adjust as needed
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 20,
   },
-  inputText: {
-    fontSize: 10,
-    fontWeight: "regular",
-    marginTop: 10,
-    paddingBottom: 10,
+  inputTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
   },
   title: {
     textAlign: "center",
     fontSize: 24,
     fontWeight: "bold",
-    color: "#196EB0",
-    margin: 10,
+    marginBottom: 20,
   },
-
-  text: {
-    color: "gray",
-    marginVertical: 10,
-  },
-  link: {
-    color: "#196EB0",
-  },
+  button: { width: "50%", backgroundColor: "#FBBC05", alignItems: "center" },
 });

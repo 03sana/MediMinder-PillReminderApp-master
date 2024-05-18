@@ -1,41 +1,47 @@
-import React from "react";
-import { Button } from "react-native";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import auth from "@react-native-firebase/auth";
+import React, { useEffect } from "react";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/user/reducers";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../firebase";
 
 const GoogleSignInButton = () => {
-  //Configure Google Signin
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "97566136614-375vdr4jg0cco8a4llqh1f3ill7cckfg.apps.googleusercontent.com",
+      scopes: [],
+      offlineAccess: true,
+    });
+  }, []);
 
   const onGoogleButtonPress = async () => {
     try {
-      await GoogleSignin.configure({
-        webClientId:
-          "97566136614-375vdr4jg0cco8a4llqh1f3ill7cckfg.apps.googleusercontent.com",
-        offlineAccess: false,
-      });
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      const googleCredential = GoogleAuthProvider.credential(userInfo.idToken);
+      const { user } = await signInWithCredential(auth, googleCredential);
 
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true,
-      });
-
-      const { idToken } = await GoogleSignin.signIn();
-      console.log("Google Play Services available", idToken);
-
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      const userSignIn = await auth().signInWithCredential(googleCredential);
-      console.log("User signed in: ", userSignIn);
+      dispatch(setUser({ email: user.email, uid: user.uid }));
+      navigation.navigate("MainTabs", { screen: "HomeScreen" });
     } catch (error) {
-      console.error("Error signing in with Google: ", error);
+      console.log(error);
     }
   };
 
-  // Button UI
   return (
-    <Button
-      title="Sign-In with Google"
-      onPress={() =>
-        onGoogleButtonPress().then(() => console.log("Signed in with Google!"))
-      }
+    <GoogleSigninButton
+      size={GoogleSigninButton.Size.Wide}
+      color={GoogleSigninButton.Color.Dark}
+      onPress={onGoogleButtonPress}
     />
   );
 };

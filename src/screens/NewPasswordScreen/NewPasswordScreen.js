@@ -8,7 +8,6 @@ import {
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import GoogleSignInButton from "../../components/GoogleSignInButton";
 import { useNavigation } from "@react-navigation/native";
 const NewPasswordScreen = () => {
   const [code, setCode] = useState("");

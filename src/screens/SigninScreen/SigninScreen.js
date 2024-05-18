@@ -51,12 +51,13 @@ const SigninScreen = () => {
     }
     //validate user
   };
+
   const onForgotPasswordPressed = () => {
     navigation.navigate("ForgotPassword");
   };
 
   const onSignUpPressed = () => {
-    navigation.navigate("SignUp"); // Corrected navigation destination
+    navigation.navigate("SignUp");
   };
 
   return (

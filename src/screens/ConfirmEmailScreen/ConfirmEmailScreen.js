@@ -1,14 +1,8 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  ScrollViewComponent,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import GoogleSignInButton from "../../components/GoogleSignInButton";
+
 import { useNavigation } from "@react-navigation/native";
 const ConfirmEmailScreen = () => {
   const [code, setCode] = useState("");

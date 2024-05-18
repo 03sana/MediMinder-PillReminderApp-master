@@ -8,56 +8,104 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+
 import CalendarComponent from "../../components/CalenderComponent";
 import IntakeTracker from "../../components/IntakeTracker";
-import { Ionicons } from "@expo/vector-icons"; // Ensure you have this library installed
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import { db, auth } from "../../firebase";
 
 const IntakeScreen = () => {
-  const route = useRoute();
   const navigation = useNavigation();
   const [medicines, setMedicines] = useState([]);
 
   useEffect(() => {
-    // This updates the state when new medicine is passed from CalendarScreen
-    if (route.params?.newMedicine) {
-      setMedicines((prevMedicines) => [
-        ...prevMedicines,
-        route.params.newMedicine,
-      ]);
+    if (!auth.currentUser) {
+      console.log("User not logged in");
+      return;
     }
-  }, [route.params?.newMedicine]);
+
+    const q = query(
+      collection(db, "medicines"),
+      where("userId", "==", auth.currentUser.uid)
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const meds = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMedicines(meds);
+    });
+
+    return () => unsubscribe(); // Cleanup on unmount
+  }, []);
+
+  const handleMarkAsTaken = async (medicine) => {
+    if (medicine.taken) {
+      Alert.alert("Info", "This medicine has already been taken today!");
+      return;
+    }
+
+    const medicineRef = doc(db, "medicines", medicine.id);
+    try {
+      await updateDoc(medicineRef, {
+        taken: true,
+      });
+      Alert.alert("Success", "Medicine marked as taken!");
+    } catch (error) {
+      console.error("Error updating document: ", error);
+      Alert.alert("Error", "Failed to mark medicine as taken");
+    }
+  };
 
   const handleAddMedication = () => {
-    navigation.navigate("CalendarScreen");
+    console.log("Navigating to CalendarScreen");
+    navigation.navigate("CalenderScreen");
   };
 
   const handlePressInfo = (medicine) => {
     navigation.navigate("MedicineDetail", { medicine });
   };
-
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Today</Text>
         <CalendarComponent />
-        <IntakeTracker />
+
+        <IntakeTracker
+          taken={medicines.filter((med) => med.taken).length}
+          total={medicines.length}
+        />
+
         <FlatList
           data={medicines}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View style={styles.medicineItem}>
+            <TouchableOpacity
+              style={styles.medicineItem}
+              onPress={() => handlePressInfo(item)}
+            >
               <Text style={styles.medicineName}>{item.name}</Text>
-              <Text
-                style={styles.medicineDetail}
-              >{`${item.dose}, ${item.amount} pills`}</Text>
-              <TouchableOpacity onPress={() => handlePressInfo(item)}>
-                <Ionicons
-                  name="information-circle-outline"
-                  size={24}
-                  color="#196EB0"
-                />
-              </TouchableOpacity>
-            </View>
+              <Text style={styles.medicineDetail}>
+                {`${item.dose}, ${item.amount} pills`}
+              </Text>
+              {item.taken && (
+                <FontAwesome name="check-circle" size={24} color="green" />
+              )}
+              <Ionicons
+                name="information-circle-outline"
+                size={24}
+                color="#196EB0"
+              />
+            </TouchableOpacity>
           )}
         />
       </ScrollView>

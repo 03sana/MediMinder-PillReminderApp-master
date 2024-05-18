@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, Pressable ,ActivityIndicator} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 
 const CustomButton = ({
@@ -7,7 +13,7 @@ const CustomButton = ({
   type = "PRIMARY",
   bgColor,
   fgColor,
-  isLoading
+  isLoading,
 }) => {
   return (
     <Pressable
@@ -18,7 +24,7 @@ const CustomButton = ({
         bgColor ? { backgroundColor: bgColor } : {},
       ]}
     >
-      {isLoading && <ActivityIndicator color="#ffffff"/>}
+      {isLoading && <ActivityIndicator color="#ffffff" />}
       <Text
         style={[
           styles.text,
@@ -36,7 +42,6 @@ export default CustomButton;
 
 const styles = StyleSheet.create({
   container: {
-  
     flexDirection: "row",
     justifyContent: "center",
     gap: 10,
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
   container_TERTIARY4: {
     width: "50%",
     backgroundColor: "#196EB0",
-    alignItems: "center", // Aligns children elements horizontally
+    alignItems: "center",
   },
 
   text: {

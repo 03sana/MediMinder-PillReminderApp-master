@@ -1,21 +1,30 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  ScrollViewComponent,
-} from "react-native";
 import React, { useState } from "react";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import GoogleSignInButton from "../../components/GoogleSignInButton";
 import { useNavigation } from "@react-navigation/native";
-const ForgotPasswordScreen = () => {
-  const [username, setUsername] = useState("");
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
-  const navigation = useNavigation("");
+const ForgotPasswordScreen = () => {
+  const [email, setEmail] = useState("");
+  const navigation = useNavigation();
+  const auth = getAuth();
+
   const onSendPress = () => {
-    navigation.navigate("NewPassword");
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        // Password reset email sent!
+        alert(
+          "Password reset email sent! Please check your email for the reset code."
+        );
+        navigation.navigate("NewPassword"); // Navigate to NewPasswordScreen to enter the new password
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // Display an error message to the user
+        alert(`Error: ${errorMessage}`);
+      });
   };
 
   const onSigninPressed = () => {
@@ -25,11 +34,11 @@ const ForgotPasswordScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <Text style={styles.title}>Rest your password</Text>
+        <Text style={styles.title}>Reset your password</Text>
         <CustomInput
-          placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          placeholder="Enter your email"
+          value={email}
+          setValue={setEmail}
         />
 
         <CustomButton text={"Send"} onPress={onSendPress} />
