@@ -81,7 +81,9 @@ For Android:npx expo run:android
 <p float="left">
   <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/8e3ca14f-c22f-43a3-b0d2-007dbecd9c64" width="200"/>
   <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/f4950721-fdf8-44f1-ada1-c53bfbb9074a" width="200"/> 
+   
  <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/1a7b98f0-b7dc-4918-b14f-66a54ff3c22f" width="200"/> 
+   <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/60d16e46-41f0-4f68-9730-22751edc6279" width="200"/> 
 <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/fc99d7bb-17b4-4719-b606-6b26041914d6" width="200"/> 
   
   <img src="https://github.com/03sana/MediMinder-PillReminderApp-master/assets/105085789/b2f85b15-1e41-4b13-8ec2-322b11956f81" width="200"/>
